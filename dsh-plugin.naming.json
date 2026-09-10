@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "policy": "dsh-plugin-naming/v1",
+  "plugin": {
+    "namespace": "alice",
+    "name": "video-studio",
+    "coordinate": "alice/video-studio",
+    "packageName": "dsh-video-studio"
+  },
+  "names": {
+    "pluginNames": ["agent-video-studio"],
+    "loaderIds": ["agent-video-studio"],
+    "services": [],
+    "tools": [
+      "video_env",
+      "video_catalog",
+      "video_scaffold",
+      "video_render",
+      "video_tts",
+      "video_bgm",
+      "video_mix",
+      "video_qa",
+      "video_cover",
+      "video_run"
+    ],
+    "commands": [],
+    "skills": [],
+    "skillProviders": [],
+    "events": [],
+    "settingsNamespaces": [],
+    "routes": []
+  }
+}

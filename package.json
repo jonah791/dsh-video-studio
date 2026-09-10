@@ -1,0 +1,36 @@
+{
+    "name": "dsh-video-studio",
+    "version": "0.1.0",
+    "description": "视频工作台插件：把视频工厂（TTS/配乐/混音/Remotion 渲染/多级质检/主题脚手架）封装为 DSH 工具面，支撑在 DSH 内创作任意视频（不限既有范式）",
+    "type": "module",
+    "main": "lib/index.js",
+    "types": "lib/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./lib/types/index.d.ts",
+            "default": "./lib/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "lib",
+        "README.md"
+    ],
+    "license": "MIT",
+    "peerDependencies": {
+        "@deepseek-ai/cordis": "^4.0.1",
+        "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+        "@deepseek-ai/dsh-jobs": "^0.1.0-rc.6",
+        "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+        "@deepseek-ai/schemastery": "^3.18.1-rc.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.2",
+        "typescript": "^5.9.3"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "test": "node --test tests/registry.test.mjs tests/schema.test.mjs"
+    }
+}
