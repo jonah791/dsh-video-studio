@@ -278,6 +278,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_env',
+    deferLoading: true,
     description: '视频工厂环境体检：音频/视觉解释器、模型资产、技能真源是否就位，并列出可用主题数与已有项目。跑任何视频任务前用它确认前提（tools/ 全部不入 git，换机需重新获取）。',
     parameters: {},
     output: {
@@ -316,6 +317,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_catalog',
+    deferLoading: true,
     description: '视频工厂能力清单：可用主题（建新项目用）、已有项目及其 Remotion 组合（渲染用）、全部脚本登记（id/用途/解释器/参数/已知陷阱）。想知道「我能做什么、怎么调」时用它——这决定你能造出什么视频。',
     parameters: {
       section: { type: 'string', enum: ['all', 'themes', 'projects', 'scripts'], description: '只取一节（缺省 all）' },
@@ -366,6 +368,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_scaffold',
+    deferLoading: true,
     description: '用任意主题新建一个 Remotion 视频项目（23 主题可选：neon-cyber / swiss-ikb / terminal-green / newsroom …）。这是「造任意视频」的起点：脚手架产出可编译的空骨架（含设计系统 tokens），随后你写场景组件即可。慢（npx create-video + npm install），默认后台执行。',
     parameters: {
       target: { type: 'string', required: true, description: '目标目录（相对视频工厂根，或绝对路径）' },
@@ -400,6 +403,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_render',
+    deferLoading: true,
     description: '渲染任意项目的任意 Remotion 组合为 MP4。支持传入 props（同一组合渲染出不同内容——这是「不限范式」的关键：写一次组件，喂不同数据出不同片）、指定分辨率/帧率/编码/帧区间。慢，默认后台执行。',
     parameters: {
       project: { type: 'string', description: '项目（相对视频工厂根或绝对路径；缺省默认项目）' },
@@ -465,6 +469,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_tts',
+    deferLoading: true,
     description: '文本 → 口播音频（Qwen3-TTS CustomVoice，serena 预设音色）。文案为 Markdown（用 --- 分段），输出 seg-N.wav + audio-segments.json + voice-full.wav。可指定任意输入/输出目录（不限于快讯项目）。慢，默认后台。',
     parameters: {
       script: { type: 'string', description: '文案路径（相对根或绝对；缺省 docs/content/script.md）' },
@@ -498,6 +503,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_bgm',
+    deferLoading: true,
     description: '生成 AI 配乐（Stable Audio 3 w8a32 TFLite + loudnorm）。可指定任意时长/风格/自定义 prompt/种子/输出路径——风格不限于内置五种。慢，默认后台。',
     parameters: {
       duration: { type: 'number', description: '时长秒数（缺省 60）' },
@@ -539,6 +545,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_mix',
+    deferLoading: true,
     description: '口播 + BGM 混音（sidechain ducking + loudnorm）。三个路径参数必填：口播轨、BGM、输出。可调 ducking 阈值/比率、BGM 音量、淡出、高低架 EQ。快（ffmpeg 单次），默认前台。',
     parameters: {
       voice: { type: 'string', required: true, description: '口播轨 wav（相对根或绝对）' },
@@ -587,6 +594,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_qa',
+    deferLoading: true,
     description: '对任意产物跑质检（9 类）：render 技术(LUFS/电平) · video 画面经典 · vlm VLM 审片(MiniCPM-V 事实描述) · asr 台词回听 · aesthetic 音频审美四轴(PQ/CE) · rhythm 节奏对齐 · sensitive 敏感词 · bgm 配乐存在性与 ducking 实效 · sync 音画帧数一致。各脚本退出码语义不同，结果里一并给出。',
     parameters: {
       kind: { type: 'string', required: true, enum: ['render', 'video', 'vlm', 'asr', 'aesthetic', 'rhythm', 'sensitive', 'bgm', 'sync'], description: '检查类型' },
@@ -682,6 +690,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_cover',
+    deferLoading: true,
     description: '从任意项目导出封面 still（Remotion still 渲染）+ 尺寸/黑屏校验（须 1920x1080 且非纯黑）。注意：脚本固化了入口 src/index.ts 与组合名 Main。',
     parameters: {
       project: { type: 'string', description: '项目目录（缺省默认项目）' },
@@ -714,6 +723,7 @@ export function apply(ctx: Context, config: Config): void {
 
   ctx.tools.register(defineTool({
     name: 'video_run',
+    deferLoading: true,
     description: '按登记契约直接运行视频工厂的任意脚本，并原样追加你给的参数——用于其他工具未暴露的 flag，或尚未封装的脚本（如声音克隆 synthesize-qwen3-gpu.py）。这是「不限既有范式」的逃生舱：登记表给出解释器与路径，参数由你完全掌控。',
     parameters: {
       scriptId: { type: 'string', required: true, description: '登记脚本 id（用 video_catalog 查看；如 qa.vlm / tts.news / project.scaffold）' },
